@@ -1,0 +1,300 @@
+#!/usr/bin/perl
+
+use IO::Socket::INET;
+#######################################################################
+#I.C.S.G Port Scanner Tool v2                                         #
+#                                                                     #
+#Coded By WH!T3 W01F                                                  #
+#                                                                     #
+#Iran Cyber Security Group                                            #
+#                                                                     #
+#Iran-Cyber.Org                                                       #
+#                                                                     #
+#Spc Tnx: root3r | MOHAMAD-NOFOZI | KamraN HellisH | JOK3R | Pi.Hack  #
+#######################################################################
+print q {
+ _____                          _____      _                   ____
+|_   _|                        / ____|    | |                 / __ \
+  | |  _ __ __ _ _ __  ______ | |    _   _| |__   ___ _ __   | |  | |_ __ __ _
+  | | | '__/ _` | '_ \|______|| |   | | | | '_ \ / _ \ '__|  | |  | | '__/ _` |
+  | |_| | | (_| | | | |       | |___| |_| | |_) |  __/ |  _  | |__| | | | (_| |
+|_____|_|  \__,_|_| |_|        \_____\__, |_.__/ \___|_| (_)  \____/|_|  \__, |
+                                      __/ |                                _/ |
+                                     |___/                               |___/
+
+};
+sleep(2);
+print "\n";
+print "\t+=============================================================+\n";
+print "\t|               I.C.S.G Port Scanner Tool v2                  |\n";
+print "\t|                     Author: WH!T3 W01F                      |\n";
+print "\t|                       Iran-Cyber.Org                        |\n";
+print "\t| Spc Tnx: root3r|MOHAMAD-NOFOZI|KamraN HellisH|JOK3R|Pi.Hack |\n";
+print "\t+=============================================================+\n";
+print "\n";
+sleep(1);
+menu:;
+print "\nType Host Address (IP Or SiteUrl) : ";
+$target=<STDIN>;
+chomp($target);
+print "\n\t   Choose The Menu : \n";
+print "\n";
+print "\t   1-Basic Mode(Quick)(TCP).\n\n";
+print "\t   2-Basic Mode(Quich)(UDP).\n\n";
+print "\t   3-Basic Mode(Quich)(TCP&UDP).\n\n";
+print "\t   4-Complete Mode(TCP).\n\n";
+print "\t   5-Complete Mode(UDP).\n\n";
+print "\t   6-Complete Mode(TCP&UDP).\n\n";
+print "\t   7-User Defined(TCP).\n\n";
+print "\t   8-User Defined(UDP).\n\n";
+print "\t   9-User Defined(TCP&UDP).\n\n";
+print "\t   10-Exit\n\n";
+print "\tChoose : ";
+$menu=<STDIN>;
+chomp($menu);
+###################################################################
+sub basic {
+$type=$_[0];
+print "\nProcessing ...\n";
+$closed1=0;
+@ports=(20,21,22,23,24,25,35,37,53,80,88,130,135,161,162,443,445,530,546,547,561,1433,1434,1701,1723,2082,2087,2121,2222,3306,3389,8080);
+foreach $port1(@ports){
+$socket = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$port1",Proto=>"$type",Timeout=>"0.5") or $closed1++;
+close $socket;
+if ($closed1==0){
+print "\n\nFound An '$type' Open Port ! : ";
+print "$port1\n";
+}
+$closed1=0;
+}
+print "\nScan Finished.\n\n";
+after1:;
+print "Now You Want To Back To Menu (1) Or Exit (0) ? ";
+$after1=<STDIN>;
+chomp ($after1);
+if ($after1==1) {
+goto menu;
+}
+if ($after1==0) {
+print "\nHave A Good Time.Bye.\n";
+exit;
+}
+if ($after1 != 1 or 0) {
+print "\nInValid ID\n";
+sleep(2);
+goto after1;
+}
+}
+#####################################################################
+sub basic2 {
+print "\nProcessing ...\n";
+$closed2=0;
+$closed3=0;
+@ports=(20,21,22,23,24,25,35,37,53,80,88,130,135,161,162,443,445,530,546,547,561,1433,1434,1701,1723,2082,2087,2121,2222,3306,3389,8080);
+foreach $port2(@ports){
+$socket = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$port2",Proto=>"tcp",Timeout=>"0.5") or $closed2++;
+close $socket;
+$socket2 = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$port2",Proto=>"udp",Timeout=>"0.5") or $closed3++;
+close $socket2;
+if ($closed2==0){
+print "\n\nFound An TCP Open Port ! : ";
+print "$port2\n";
+}
+if ($closed3==0){
+print "\n\nFound An UDP Open Port ! : ";
+print "$port2\n";
+}
+$closed2=0;
+$closed3=0;
+}
+print "\nScan Finished.\n\n";
+after2:;
+print "Now You Want To Back To Menu (1) Or Exit (0) ? ";
+$after2=<STDIN>;
+chomp ($after2);
+if ($after2==1) {
+goto menu;
+}
+if ($after2==0) {
+print "\nHave A Good Time.Bye.\n";
+exit;
+}
+if ($after2 != 1 or 0) {
+print "\nInValid ID\n";
+sleep(2);
+goto after2;
+}
+}
+###################################################################
+sub complete {
+$type2=$_[0];
+print "\nProcessing ...\n";
+$closed3=0;
+$port3=1;
+while ($port3<=65535){
+$socket = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$port3",Proto=>"$type2") or $closed3++;
+close $socket;
+if ($closed3==0){
+print "\n\nFound An $type2 Open Port ! : ";
+print "$port3\n";
+}
+$closed3=0;
+$port3++;
+}
+print "Scan Finished.\n\n";
+after3:;
+print "Now You Want To Back To Menu (1) Or Exit (0) ? ";
+$after3=<STDIN>;
+chomp ($after3);
+if ($after3==1) {
+goto menu;
+}
+if ($after3==0) {
+print "\n\nHave A Good Time.Bye.\n";
+exit;
+}
+if ($after3 != 1 or 0) {
+print "\nInValid ID\n";
+sleep(2);
+goto after3;
+}
+}
+#####################################################################
+sub complete2 {
+print "\nProcessing ...\n";
+$closed4=0;
+$closed5=0;
+$port4=1;
+while ($port4<=65535){
+$socket = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$port4",Proto=>"tcp") or $closed4++;
+close $socket;
+$socket2 = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$port4",Proto=>"udp") or $closed5++;
+close $socket2;
+if ($closed4==0){
+print "\n\nFound TCP An Open Port ! : ";
+print "$port4\n";
+}
+if ($closed5==0){
+print "\n\nFound UDP An Open Port ! : ";
+print "$port4\n";
+}
+$closed4=0;
+$closed5=0;
+$port4++;
+}
+print "Scan Finished.\n\n";
+after4:;
+print "Now You Want To Back To Menu (1) Or Exit (0) ? ";
+$after4=<STDIN>;
+chomp ($after4);
+if ($after4==1) {
+goto menu;
+}
+if ($after4==0) {
+print "\n\nHave A Good Time.Bye.\n";
+exit;
+}
+if ($after4 != 1 or 0) {
+print "\nInValid ID\n";
+sleep(2);
+goto after4;
+}
+}
+#####################################################################
+sub user {
+$type3=$_[0];
+print "\nType Start Of The Port : ";
+$start1=<STDIN>;
+chomp($start1);
+print "\nType End Of The Port : ";
+$end1=<STDIN>;
+chomp($end1);
+print "\nProcessing ...\n";
+$closed6=0;
+while ($start1<=$end1){
+$socket = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$start1",Proto=>"$type3") or $closed6++;
+close $socket;
+if ($closed6==0){
+print "\n\nFound An $type3 Open Port ! : ";
+print "$start1\n";
+}
+$closed6=0;
+$start1++;
+}
+print "Scan Finished.\n\n";
+after5:;
+print "Now You Want To Back To Menu (1) Or Exit (0) ? ";
+$after5=<STDIN>;
+chomp ($after5);
+if ($after5==1) {
+goto menu;
+}
+if ($after5==0) {
+print "\n\nHave A Good Time.Bye.\n";
+exit;
+}
+if ($after5 != 1 or 0) {
+print "\nInValid ID\n";
+sleep(2);
+goto after5;
+}
+}
+#####################################################################
+sub user2 {
+print "\nType Start Of The Port : ";
+$start2=<STDIN>;
+chomp($start2);
+print "\nType End Of The Port : ";
+$end2=<STDIN>;
+chomp($end2);
+print "\nProcessing ...\n";
+$closed7=0;
+$closed8=0;
+while ($start2<=$end2){
+$socket = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$start2",Proto=>"tcp") or $closed7++;
+close $socket;
+$socket = IO::Socket::INET->new(PeerAddr=>"$target",PeerPort=>"$start2",Proto=>"udp") or $closed8++;
+close $socket;
+if ($closed7==0){
+print "\n\nFound An TCP Open Port ! : ";
+print "$start2\n";
+}
+if ($closed8==0){
+print "\n\nFound An UDP Open Port ! : ";
+print "$start2\n";
+}
+$closed7=0;
+$closed8=0;
+$start2++;
+}
+print "Scan Finished.\n\n";
+after6:;
+print "Now You Want To Back To Menu (1) Or Exit (0) ? ";
+$after6=<STDIN>;
+chomp ($after6);
+if ($after6==1) {
+goto menu;
+}
+if ($after6==0) {
+print "\n\nHave A Good Time.Bye.\n";
+exit;
+}
+if ($after6 != 1 or 0) {
+print "\nInValid ID\n";
+sleep(2);
+goto after6;
+}
+}
+#####################################################################
+if ($menu==1) {basic('tcp');}
+if ($menu==2) {basic('udp');}
+if ($menu==3) {basic2();}
+if ($menu==4) {complete('tcp');}
+if ($menu==5) {complete('udp');}
+if ($menu==6) {complete2();}
+if ($menu==7) {user('tcp');}
+if ($menu==8) {user('udp');}
+if ($menu==9) {user2();}
+if ($menu==10) {print "\nHave A Good Time.Bye.\n";sleep(2);exit;}
+if ($menu != 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10) {print "\n\tInValid ID\n";sleep(2);goto menu;}
+#####################################################################
